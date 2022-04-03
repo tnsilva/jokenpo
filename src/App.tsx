@@ -107,7 +107,7 @@ function App() {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          Computador 1:
+          PC 1:
           <BoxApp>
             {opComp1 === 0 && (
               <Box>
@@ -129,7 +129,7 @@ function App() {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          Computador 2:
+          PC 2:
           <BoxApp>
             {opComp2 === 0 && (
               <Box>
