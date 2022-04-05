@@ -1,7 +1,7 @@
 import { Typography, Divider, Box, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { api } from "./services";
-import { Box2, BoxApp, Btn } from "./styles";
+import { Box2, Box3, BoxApp, Btn } from "./styles";
 
 function App() {
   const [opJogador, setOpJogador] = useState(0);
@@ -11,58 +11,63 @@ function App() {
   const [contJog, setContJog] = useState(0);
   const [contComp1, setContComp1] = useState(0);
   const [contComp2, setContComp2] = useState(0);
+  const [rodadas, setRodadas] = useState<any[]>([]);
 
   useEffect(() => {
     if (opJogador === opComp1 && opComp1 === opComp2) {
       setMsg("Empate");
     } else {
       setMsg("");
-      if (
-        (opJogador === 0 && opComp1 === 2 && opComp2 === 2) ||
-        (opJogador === 1 && opComp1 === 0 && opComp2 === 0) ||
-        (opJogador === 2 && opComp1 === 1 && opComp2 === 1) ||
-        (opJogador === 0 && opComp1 === 0 && opComp2 === 2) ||
-        (opJogador === 0 && opComp2 === 0 && opComp1 === 2) ||
-        (opJogador === 1 && opComp1 === 1 && opComp2 === 0) ||
-        (opJogador === 1 && opComp2 === 1 && opComp1 === 0) ||
-        (opJogador === 2 && opComp1 === 2 && opComp2 === 1) ||
-        (opJogador === 2 && opComp2 === 2 && opComp1 === 1)
-      ) {
-        console.log("Jogador Venceu");
-        setContJog(contJog + 1);
-      }
+      camparePlayers(
+        opJogador,
+        opComp1,
+        setContJog,
+        setContComp1,
+        "Jogador",
+        "PC1"
+      );
 
-      if (
-        (opComp1 === 0 && opComp2 === 2 && opJogador === 2) ||
-        (opComp1 === 1 && opComp2 === 0 && opJogador === 0) ||
-        (opComp1 === 2 && opComp2 === 1 && opJogador === 1) ||
-        (opComp1 === 0 && opComp2 === 0 && opJogador === 2) ||
-        (opComp1 === 0 && opJogador === 0 && opComp2 === 2) ||
-        (opComp1 === 1 && opComp2 === 1 && opJogador === 0) ||
-        (opComp1 === 1 && opJogador === 1 && opComp2 === 0) ||
-        (opComp1 === 2 && opComp2 === 2 && opJogador === 1) ||
-        (opComp1 === 2 && opJogador === 2 && opComp2 === 1)
-      ) {
-        console.log("PC1 Venceu");
-        setContComp1(contComp1 + 1);
-      }
-
-      if (
-        (opComp2 === 0 && opJogador === 2 && opComp1 === 2) ||
-        (opComp2 === 1 && opJogador === 0 && opComp1 === 0) ||
-        (opComp2 === 2 && opJogador === 1 && opComp1 === 1) ||
-        (opComp2 === 0 && opJogador === 0 && opComp1 === 2) ||
-        (opComp2 === 0 && opComp1 === 0 && opJogador === 2) ||
-        (opComp2 === 1 && opJogador === 1 && opComp1 === 0) ||
-        (opComp2 === 1 && opComp1 === 1 && opJogador === 0) ||
-        (opComp2 === 2 && opJogador === 2 && opComp1 === 1) ||
-        (opComp2 === 2 && opComp1 === 2 && opJogador === 1)
-      ) {
-        console.log("PC2 Venceu");
-        setContComp2(contComp2 + 1);
-      }
+      camparePlayers(
+        opJogador,
+        opComp2,
+        setContJog,
+        setContComp2,
+        "Jogador",
+        "PC2"
+      );
+      camparePlayers(
+        opComp1,
+        opComp2,
+        setContComp1,
+        setContComp2,
+        "PC1",
+        "PC2"
+      );
     }
   }, [setOpJogador, opComp1, opComp2]);
+
+  const camparePlayers = (
+    a: number,
+    b: number,
+    setA: (prev: any) => void,
+    setB: (prev: any) => void,
+    op1: string,
+    op2: string
+  ) => {
+    if ((a === 0 && b === 2) || (a === 1 && b === 0) || (a === 2 && b === 1)) {
+      setA((prev: number) => prev + 1);
+      // const newRodada = rodadas.concat([`${op1} venceu`]);
+      setRodadas([`${op1} venceu de ${op2}`]);
+      console.log("vim no A");
+    }
+
+    if ((b === 0 && a === 2) || (b === 1 && a === 0) || (b === 2 && a === 1)) {
+      setB((prev: number) => prev + 1);
+      // const newRodada = rodadas.concat([`${op2} venceu`]);
+      setRodadas([`${op2} venceu de ${op1}`]);
+      console.log("vim no B");
+    }
+  };
 
   const jogar = async (n: number) => {
     setOpJogador(n);
@@ -165,6 +170,19 @@ function App() {
         <Box>PC1: {contComp1}</Box>
         <Box>PC2: {contComp2}</Box>
       </Box2>
+
+      {rodadas.length > 0 && (
+        <>
+          <Divider />
+          <Box3>
+            {rodadas.map((rod) => (
+              <ul>
+                <li>{rod}</li>
+              </ul>
+            ))}
+          </Box3>
+        </>
+      )}
     </Box>
   );
 }
