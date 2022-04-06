@@ -40,3 +40,10 @@ export const Box3 = styled(Box)`
   margin: 15px 0;
   padding: 6px;
 `;
+
+export const Box4 = styled(Box)`
+  // display: flex;
+  border-radius: 5%;
+  margin: 15px 0;
+  padding: 6px;
+`;

@@ -1,17 +1,29 @@
-import { Typography, Divider, Box, Grid } from "@mui/material";
+import { Typography, Divider, Box, Grid, Paper } from "@mui/material";
 import { SetStateAction, useEffect, useState } from "react";
 import { api } from "./services";
-import { Box2, Box3, BoxApp, Btn } from "./styles";
+import { Box2, Box3, Box4, BoxApp, Btn } from "./styles";
+import { v4 as uuidv4 } from "uuid";
 
-function App() {
+interface RodadaProps {
+  id?: string;
+  rodada: number;
+  jogador: string;
+  pc1: string;
+  pc2: string;
+}
+
+function App({ id, jogador, pc1, pc2 }: RodadaProps) {
   const [opJogador, setOpJogador] = useState(0);
   const [opComp1, setOpComp1] = useState(0);
   const [opComp2, setOpComp2] = useState(0);
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState<string>("");
   const [contJog, setContJog] = useState(0);
   const [contComp1, setContComp1] = useState(0);
   const [contComp2, setContComp2] = useState(0);
-  const [rodadas, setRodadas] = useState<any[]>([]);
+  const [rodadas, setRodadas] = useState<RodadaProps[]>([
+    { rodada: 0, jogador: "", pc1: "", pc2: "" },
+  ]);
+  const [n, setN] = useState(0);
 
   useEffect(() => {
     if (opJogador === opComp1 && opComp1 === opComp2) {
@@ -44,7 +56,7 @@ function App() {
         "PC2"
       );
     }
-  }, [setOpJogador, opComp1, opComp2]);
+  }, [opJogador]);
 
   const camparePlayers = (
     a: number,
@@ -56,32 +68,44 @@ function App() {
   ) => {
     if ((a === 0 && b === 2) || (a === 1 && b === 0) || (a === 2 && b === 1)) {
       setA((prev: number) => prev + 1);
-      // const newRodada = rodadas.concat([`${op1} venceu`]);
-      setRodadas([`${op1} venceu de ${op2}`]);
-      console.log("vim no A");
     }
 
     if ((b === 0 && a === 2) || (b === 1 && a === 0) || (b === 2 && a === 1)) {
       setB((prev: number) => prev + 1);
-      // const newRodada = rodadas.concat([`${op2} venceu`]);
-      setRodadas([`${op2} venceu de ${op1}`]);
-      console.log("vim no B");
     }
+
+    setRodadas([
+      ...rodadas,
+      {
+        id: uuidv4(),
+        rodada: n,
+        jogador: `Jogador: ${contJog} `,
+        pc1: `PC1: ${contComp1}`,
+        pc2: `PC2: ${contComp2}`,
+      },
+    ]);
+
+    setN(n + 1);
   };
 
-  const jogar = async (n: number) => {
+  const jogar = (n: number) => {
+    // await api
+    //   .get("")
+    //   .then((response) => {
+    //     setOpComp1(response.data[0]);
+    //     setOpComp2(response.data[1]);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    setOpComp1(Math.floor(Math.random() * 3));
+    setOpComp2(Math.floor(Math.random() * 3));
+
     setOpJogador(n);
-
-    await api
-      .get("")
-      .then((response) => {
-        setOpComp1(response.data[0]);
-        setOpComp2(response.data[1]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
+
+  // const atualizaRodada = (a: number, b: number, c: number) => {};
 
   return (
     <Box sx={{ m: 1, p: 6, s: 6 }}>
@@ -174,13 +198,19 @@ function App() {
       {rodadas.length > 0 && (
         <>
           <Divider />
-          <Box3>
-            {rodadas.map((rod) => (
-              <ul>
-                <li>{rod}</li>
-              </ul>
-            ))}
-          </Box3>
+          {rodadas.map(
+            (rod) =>
+              rod.jogador !== "" && (
+                <Box4>
+                  <Paper key={rod.id}>
+                    <Typography variant="h6">Rodada: {rod.rodada}</Typography>
+                    <Box>{rod.jogador}</Box>
+                    <Box>{rod.pc1}</Box>
+                    <Box>{rod.pc2}</Box>
+                  </Paper>
+                </Box4>
+              )
+          )}
         </>
       )}
     </Box>
