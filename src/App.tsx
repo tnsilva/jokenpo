@@ -1,5 +1,5 @@
 import { Typography, Divider, Box, Grid, Paper } from "@mui/material";
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import { api } from "./services";
 import { Box2, Box3, Box4, BoxApp, Btn } from "./styles";
 import { v4 as uuidv4 } from "uuid";
@@ -13,50 +13,76 @@ interface RodadaProps {
 }
 
 function App({ id, jogador, pc1, pc2 }: RodadaProps) {
-  const [opJogador, setOpJogador] = useState(0);
-  const [opComp1, setOpComp1] = useState(0);
-  const [opComp2, setOpComp2] = useState(0);
+  const [opJogador, setOpJogador] = useState(null);
+  const [opComp1, setOpComp1] = useState(null);
+  const [opComp2, setOpComp2] = useState(null);
   const [msg, setMsg] = useState<string>("");
   const [contJog, setContJog] = useState(0);
   const [contComp1, setContComp1] = useState(0);
   const [contComp2, setContComp2] = useState(0);
-  const [rodadas, setRodadas] = useState<RodadaProps[]>([
-    { rodada: 0, jogador: "", pc1: "", pc2: "" },
-  ]);
+  const [rodadas, setRodadas] = useState<RodadaProps[]>([]);
   const [n, setN] = useState(0);
+  const [print, setPrint] = useState(0);
+
+  const prevJog = useRef(0);
+  const prevPc1 = useRef(0);
+  const prevPc2 = useRef(0);
 
   useEffect(() => {
-    if (opJogador === opComp1 && opComp1 === opComp2) {
-      setMsg("Empate");
-    } else {
-      setMsg("");
-      camparePlayers(
-        opJogador,
-        opComp1,
-        setContJog,
-        setContComp1,
-        "Jogador",
-        "PC1"
-      );
+    if (n > 0) {
+      if (opJogador === opComp1 && opComp1 === opComp2) {
+        setMsg("Empate");
+      } else {
+        setMsg("");
+        camparePlayers(
+          opJogador,
+          opComp1,
+          setContJog,
+          setContComp1,
+          "Jogador",
+          "PC1"
+        );
 
-      camparePlayers(
-        opJogador,
-        opComp2,
-        setContJog,
-        setContComp2,
-        "Jogador",
-        "PC2"
-      );
-      camparePlayers(
-        opComp1,
-        opComp2,
-        setContComp1,
-        setContComp2,
-        "PC1",
-        "PC2"
-      );
+        camparePlayers(
+          opJogador,
+          opComp2,
+          setContJog,
+          setContComp2,
+          "Jogador",
+          "PC2"
+        );
+        camparePlayers(
+          opComp1,
+          opComp2,
+          setContComp1,
+          setContComp2,
+          "PC1",
+          "PC2"
+        );
+      }
+
+      prevJog.current = contJog;
+      prevPc1.current = contComp1;
+      prevPc2.current = contComp2;
+
+      setPrint((prev) => prev + 1);
     }
-  }, [opJogador]);
+  }, [opJogador, opComp1, opComp2, n]);
+
+  useEffect(() => {
+    if (print > 0) {
+      setRodadas([
+        {
+          id: uuidv4(),
+          rodada: n,
+          jogador: `Jogador: ${contJog - prevJog.current} `,
+          pc1: `PC1: ${contComp1 - prevPc1.current}`,
+          pc2: `PC2: ${contComp2 - prevPc2.current}`,
+        },
+        ...rodadas,
+      ]);
+    }
+  }, [print]);
 
   const camparePlayers = (
     a: number,
@@ -73,22 +99,9 @@ function App({ id, jogador, pc1, pc2 }: RodadaProps) {
     if ((b === 0 && a === 2) || (b === 1 && a === 0) || (b === 2 && a === 1)) {
       setB((prev: number) => prev + 1);
     }
-
-    setRodadas([
-      ...rodadas,
-      {
-        id: uuidv4(),
-        rodada: n,
-        jogador: `Jogador: ${contJog} `,
-        pc1: `PC1: ${contComp1}`,
-        pc2: `PC2: ${contComp2}`,
-      },
-    ]);
-
-    setN(n + 1);
   };
 
-  const jogar = (n: number) => {
+  const jogar = (numb: number) => {
     // await api
     //   .get("")
     //   .then((response) => {
@@ -102,7 +115,9 @@ function App({ id, jogador, pc1, pc2 }: RodadaProps) {
     setOpComp1(Math.floor(Math.random() * 3));
     setOpComp2(Math.floor(Math.random() * 3));
 
-    setOpJogador(n);
+    setOpJogador(numb);
+
+    setN((prev) => prev + 1);
   };
 
   // const atualizaRodada = (a: number, b: number, c: number) => {};
@@ -201,8 +216,8 @@ function App({ id, jogador, pc1, pc2 }: RodadaProps) {
           {rodadas.map(
             (rod) =>
               rod.jogador !== "" && (
-                <Box4>
-                  <Paper key={rod.id}>
+                <Box4 key={rod.id}>
+                  <Paper>
                     <Typography variant="h6">Rodada: {rod.rodada}</Typography>
                     <Box>{rod.jogador}</Box>
                     <Box>{rod.pc1}</Box>
