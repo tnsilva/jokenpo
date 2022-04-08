@@ -141,7 +141,7 @@ function App() {
   };
 
   return (
-    <Box sx={{ m: 1, p: 6, s: 6 }}>
+    <Box sx={{ m: 1, p: 1, s: 1 }}>
       <Typography variant="h6">Pedra, Papel e Tesoura</Typography>
 
       <Divider />
