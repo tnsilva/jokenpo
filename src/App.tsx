@@ -25,7 +25,7 @@ function App() {
   const prevPc1 = useRef(0);
   const prevPc2 = useRef(0);
 
-  const [cores, setCores] = useState(["#e3e3e3", "#32a4a8", "#155052"]);
+  const [cores, setCores] = useState(["#FF8A8A", "#32a4a8", "#155052"]);
 
   useEffect(() => {
     if (n > 0) {
@@ -164,7 +164,6 @@ function App() {
             <Btn type="submit" onClick={() => jogar(2)}>
               <img src="tesoura.png" width="75px" alt="Tesoura" />
             </Btn>
-            {opJogador}
           </BoxApp>
         </Grid>
 
@@ -189,7 +188,6 @@ function App() {
                     <img src="tesoura.png" width="75px" alt="Tesoura" />
                   </Box>
                 )}
-                {opComp1}
               </BoxApp>
             )}
           </Box>
@@ -215,8 +213,6 @@ function App() {
                     <img src="tesoura.png" width="75px" alt="Tesoura" />
                   </Box>
                 )}
-
-                {opComp2}
               </BoxApp>
             )}
           </Box>
