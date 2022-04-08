@@ -5,9 +5,9 @@ import { Box2, Box4, BoxApp, Btn } from "./styles";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const [opJogador, setOpJogador] = useState(0);
-  const [opComp1, setOpComp1] = useState(0);
-  const [opComp2, setOpComp2] = useState(0);
+  const [opJogador, setOpJogador] = useState(null);
+  const [opComp1, setOpComp1] = useState(null);
+  const [opComp2, setOpComp2] = useState(null);
   const [msg, setMsg] = useState<string>("");
   const [contJog, setContJog] = useState(0);
   const [contComp1, setContComp1] = useState(0);
