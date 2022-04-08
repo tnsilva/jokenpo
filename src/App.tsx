@@ -1,32 +1,31 @@
 import { Typography, Divider, Box, Grid, Paper } from "@mui/material";
-import { SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api } from "./services";
-import { Box2, Box3, Box4, BoxApp, Btn } from "./styles";
+import { Box2, Box4, BoxApp, Btn } from "./styles";
 import { v4 as uuidv4 } from "uuid";
 
-interface RodadaProps {
-  id?: string;
-  rodada: number;
-  jogador: string;
-  pc1: string;
-  pc2: string;
-}
-
-function App({ id, jogador, pc1, pc2 }: RodadaProps) {
-  const [opJogador, setOpJogador] = useState(null);
-  const [opComp1, setOpComp1] = useState(null);
-  const [opComp2, setOpComp2] = useState(null);
+function App() {
+  const [opJogador, setOpJogador] = useState(0);
+  const [opComp1, setOpComp1] = useState(0);
+  const [opComp2, setOpComp2] = useState(0);
   const [msg, setMsg] = useState<string>("");
   const [contJog, setContJog] = useState(0);
   const [contComp1, setContComp1] = useState(0);
   const [contComp2, setContComp2] = useState(0);
-  const [rodadas, setRodadas] = useState<RodadaProps[]>([]);
+  const [rodadas, setRodadas] = useState([
+    { id: "", jogador: 0, pc1: 0, pc2: 0, rodada: 0 },
+  ]);
   const [n, setN] = useState(0);
   const [print, setPrint] = useState(0);
+  const [bgBox1, setBgBox1] = useState("#e3e3e3");
+  const [bgBox2, setBgBox2] = useState("#e3e3e3");
+  const [bgBox3, setBgBox3] = useState("#e3e3e3");
 
   const prevJog = useRef(0);
   const prevPc1 = useRef(0);
   const prevPc2 = useRef(0);
+
+  const [cores, setCores] = useState(["#e3e3e3", "#32a4a8", "#155052"]);
 
   useEffect(() => {
     if (n > 0) {
@@ -71,16 +70,37 @@ function App({ id, jogador, pc1, pc2 }: RodadaProps) {
 
   useEffect(() => {
     if (print > 0) {
+      let ptsJog = contJog - prevJog.current;
+      let ptsPc1 = contComp1 - prevPc1.current;
+      let ptsPc2 = contComp2 - prevPc2.current;
       setRodadas([
         {
           id: uuidv4(),
           rodada: n,
-          jogador: `Jogador: ${contJog - prevJog.current} `,
-          pc1: `PC1: ${contComp1 - prevPc1.current}`,
-          pc2: `PC2: ${contComp2 - prevPc2.current}`,
+          jogador: ptsJog,
+          pc1: ptsPc1,
+          pc2: ptsPc2,
         },
         ...rodadas,
       ]);
+
+      ptsJog === 1
+        ? setBgBox1(cores[1])
+        : ptsJog === 2
+        ? setBgBox1(cores[2])
+        : setBgBox1(cores[0]);
+
+      ptsPc1 === 1
+        ? setBgBox2(cores[1])
+        : ptsPc1 === 2
+        ? setBgBox2(cores[2])
+        : setBgBox2(cores[0]);
+
+      ptsPc2 === 1
+        ? setBgBox3(cores[1])
+        : ptsPc2 === 2
+        ? setBgBox3(cores[2])
+        : setBgBox3(cores[0]);
     }
   }, [print]);
 
@@ -120,8 +140,6 @@ function App({ id, jogador, pc1, pc2 }: RodadaProps) {
     setN((prev) => prev + 1);
   };
 
-  // const atualizaRodada = (a: number, b: number, c: number) => {};
-
   return (
     <Box sx={{ m: 1, p: 6, s: 6 }}>
       <Typography variant="h6">Pedra, Papel e Tesoura</Typography>
@@ -136,7 +154,7 @@ function App({ id, jogador, pc1, pc2 }: RodadaProps) {
       >
         <Grid item xs={12} md={4}>
           Jogador:
-          <BoxApp>
+          <BoxApp bgcolor={bgBox1}>
             <Btn type="submit" onClick={() => jogar(0)}>
               <img src="pedra.png" width="75px" alt="Pedra" />
             </Btn>
@@ -151,48 +169,56 @@ function App({ id, jogador, pc1, pc2 }: RodadaProps) {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          PC 1:
-          <BoxApp>
-            {opComp1 === 0 && (
-              <Box>
-                <img src="pedra.png" width="75px" alt="Pedra" />
-              </Box>
+          <Box>
+            PC 1:
+            {opComp1 !== null && (
+              <BoxApp bgcolor={bgBox2}>
+                {opComp1 === 0 && (
+                  <Box>
+                    <img src="pedra.png" width="75px" alt="Pedra" />
+                  </Box>
+                )}
+                {opComp1 === 1 && (
+                  <Box>
+                    <img src="papel.png" width="75px" alt="Papel" />
+                  </Box>
+                )}
+                {opComp1 === 2 && (
+                  <Box>
+                    <img src="tesoura.png" width="75px" alt="Tesoura" />
+                  </Box>
+                )}
+                {opComp1}
+              </BoxApp>
             )}
-            {opComp1 === 1 && (
-              <Box>
-                <img src="papel.png" width="75px" alt="Papel" />
-              </Box>
-            )}
-            {opComp1 === 2 && (
-              <Box>
-                <img src="tesoura.png" width="75px" alt="Tesoura" />
-              </Box>
-            )}
-            {opComp1}
-          </BoxApp>
+          </Box>
         </Grid>
 
         <Grid item xs={12} md={4}>
-          PC 2:
-          <BoxApp>
-            {opComp2 === 0 && (
-              <Box>
-                <img src="pedra.png" width="75px" alt="Pedra" />
-              </Box>
-            )}
-            {opComp2 === 1 && (
-              <Box>
-                <img src="papel.png" width="75px" alt="Papel" />
-              </Box>
-            )}
-            {opComp2 === 2 && (
-              <Box>
-                <img src="tesoura.png" width="75px" alt="Tesoura" />
-              </Box>
-            )}
+          <Box>
+            PC 2:
+            {opComp2 !== null && (
+              <BoxApp bgcolor={bgBox3}>
+                {opComp2 === 0 && (
+                  <Box>
+                    <img src="pedra.png" width="75px" alt="Pedra" />
+                  </Box>
+                )}
+                {opComp2 === 1 && (
+                  <Box>
+                    <img src="papel.png" width="75px" alt="Papel" />
+                  </Box>
+                )}
+                {opComp2 === 2 && (
+                  <Box>
+                    <img src="tesoura.png" width="75px" alt="Tesoura" />
+                  </Box>
+                )}
 
-            {opComp2}
-          </BoxApp>
+                {opComp2}
+              </BoxApp>
+            )}
+          </Box>
         </Grid>
       </Grid>
 
@@ -215,13 +241,13 @@ function App({ id, jogador, pc1, pc2 }: RodadaProps) {
           <Divider />
           {rodadas.map(
             (rod) =>
-              rod.jogador !== "" && (
+              rod.rodada > 0 && (
                 <Box4 key={rod.id}>
                   <Paper>
                     <Typography variant="h6">Rodada: {rod.rodada}</Typography>
-                    <Box>{rod.jogador}</Box>
-                    <Box>{rod.pc1}</Box>
-                    <Box>{rod.pc2}</Box>
+                    <Box>Jogador: {rod.jogador}</Box>
+                    <Box>PC1: {rod.pc1}</Box>
+                    <Box>PC2: {rod.pc2}</Box>
                   </Paper>
                 </Box4>
               )

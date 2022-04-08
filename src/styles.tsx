@@ -1,27 +1,34 @@
 import styled from "@emotion/styled";
 import { Button, Box, Paper } from "@mui/material";
 
+interface BgProps {
+  bg: string;
+}
+
 export const Btn = styled(Button)`
   display: flex;
   border-radius: 50%;
   margin: 2 auto;
   padding: 2px;
-  background: blue;
+  background: white;
 
   &:hover {
-    background: white;
+    background: blue;
   }
 `;
 
-export const BoxApp = styled(Box)`
+
+export const BoxApp = styled((props : any) => (
+  <Box sx = {{ bgcolor: { className: 'bg' } }} {...props} />
+))`
   display: flex;
   // border: 0.5px solid black;
   border-radius: 5%;
   margin: 15px 0;
   padding: 6px;
   justify-content: space-around;
-  background: gray;
-  color: white;
+  background: ${props => props.bgcolor};
+ 
 `;
 
 export const Box2 = styled(Box)`
