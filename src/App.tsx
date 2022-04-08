@@ -141,10 +141,10 @@ function App() {
   };
 
   return (
-    <Box sx={{ m: 1, p: 1, s: 1 }}>
+    <Box sx={{ m: 2, p: 2 }}>
       <Typography variant="h6">Pedra, Papel e Tesoura</Typography>
-
       <Divider />
+
       <Grid
         container
         direction="row"
@@ -152,8 +152,8 @@ function App() {
         alignItems="center"
         spacing={1}
       >
-        <Grid item xs={12} md={4}>
-          Jogador:
+        <Grid item xs={12} md={6}>
+          <Box sx={{ p: 1 }}>Clique em um dos botões abaixo para começar!</Box>
           <BoxApp bgcolor={bgBox1}>
             <Btn type="submit" onClick={() => jogar(0)}>
               <img src="pedra.png" width="75px" alt="Pedra" />
@@ -168,9 +168,10 @@ function App() {
           </BoxApp>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={6} md={3}>
           <Box>
-            PC 1:
+            <Box sx={{ p: 1 }}>PC 1:</Box>
+
             {opComp1 !== null && (
               <BoxApp bgcolor={bgBox2}>
                 {opComp1 === 0 && (
@@ -194,9 +195,9 @@ function App() {
           </Box>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={6} md={3}>
           <Box>
-            PC 2:
+            <Box sx={{ p: 1 }}>PC 2:</Box>
             {opComp2 !== null && (
               <BoxApp bgcolor={bgBox3}>
                 {opComp2 === 0 && (
