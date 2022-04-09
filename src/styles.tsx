@@ -17,6 +17,19 @@ export const Btn = styled(Button)`
   }
 `;
 
+export const Btn1 = styled(Button)`
+  display: flex;
+
+  margin: 2 auto;
+  padding: 2px;
+  background: white;
+
+  &:hover {
+    background: blue;
+    color: white;
+  }
+`;
+
 
 export const BoxApp = styled((props : any) => (
   <Box sx = {{ bgcolor: { className: 'bg' } }} {...props} />

@@ -1,7 +1,7 @@
-import { Typography, Divider, Box, Grid, Paper } from "@mui/material";
+import { Typography, Divider, Box, Grid, Paper, Button, Link } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { api } from "./services";
-import { Box2, Box4, BoxApp, Btn } from "./styles";
+import { Box2, Box4, BoxApp, Btn, Btn1 } from "./styles";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
@@ -140,11 +140,21 @@ function App() {
     setN((prev) => prev + 1);
   };
 
-  return (
-    <Box sx={{ m: 2, p: 2 }}>
-      <Typography variant="h6">Pedra, Papel e Tesoura</Typography>
-      <Divider />
+  const novaJogada = () => {
+    setOpComp1(null);
+    setOpComp2(null);  
+  }
 
+  return (
+    <Box sx={{ m: 2, p: 2 }} >
+      <Box display="flex" >
+      
+
+      <Typography variant="h4">Pedra, Papel e Tesoura</Typography>
+      
+      </Box>
+      <Divider />
+      
       <Grid
         container
         direction="row"
@@ -218,21 +228,21 @@ function App() {
           </Box>
         </Grid>
       </Grid>
-
+      
       {msg.length > 0 && (
         <>
           <Divider />
           <Box2>{msg}</Box2>
         </>
       )}
-
+      
       <Divider />
       <Box2>
-        <Box>Jogador: {contJog}</Box>
+        <Box >Jogador: {contJog}</Box>
         <Box>PC1: {contComp1}</Box>
         <Box>PC2: {contComp2}</Box>
       </Box2>
-
+      {opComp1 !== null && opComp1 !== null &&(<Btn1 sx={{m: 1}} variant="outlined" href="/" onClick={()=> novaJogada} >Novo Jogo</Btn1>)}           
       {rodadas.length > 0 && (
         <>
           <Divider />
