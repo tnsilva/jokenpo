@@ -39,11 +39,6 @@ export const Home = () => {
               </Box>
             </Grid>
 
-            <Grid item xs={12} md={12}>
-              <Box sx={{ p: 1 }}>Jogador</Box>
-              <Jogador />
-            </Grid>
-
             <Grid item xs={6} md={6}>
               <Box>
                 <Box sx={{ p: 1 }}>PC 1:</Box>
@@ -57,6 +52,11 @@ export const Home = () => {
                 <Box sx={{ p: 1 }}>PC 2:</Box>
                 <Comp2 />
               </Box>
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              <Box sx={{ p: 1 }}>Jogador</Box>
+              <Jogador />
             </Grid>
           </>
         )}
