@@ -90,5 +90,5 @@ export const Box5 = styled(Box)`
 `;
 
 export const Box6 = styled(Paper)`
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
 `;

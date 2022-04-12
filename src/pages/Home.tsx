@@ -2,7 +2,7 @@ import { Comp1, Comp2, Jogador } from ".";
 import { usePlayContext } from "../hooks";
 
 import { Grid, Box, Alert, Typography, Paper } from "@mui/material";
-import { Box2, Box5, Box6 } from "../styles/styles";
+import { Box5, Box6 } from "../styles/styles";
 
 export const Home = () => {
   const { msg, opPc1, opPc2 } = usePlayContext();
