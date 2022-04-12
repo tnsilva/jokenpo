@@ -19,9 +19,7 @@ export const Home = () => {
           <>
             <Grid item xs={12} md={12}>
               <Alert sx={{ p: 1 }} severity="info">
-                Clique em um dos botões abaixo para começar! | Legenda: Vermelho
-                = perdeu, Verde Claro = marcou 01 ponto e Verde Escuro = marcou
-                02 pontos.
+                Clique em um dos botões abaixo para começar!
               </Alert>
             </Grid>
 
@@ -35,7 +33,8 @@ export const Home = () => {
               <Box sx={{ p: 0, mb: 1 }}>
                 <Alert sx={{ p: 1 }} severity="info">
                   Para recomeçar, clique em "Novo Jogo" e para voltar, clique em
-                  Jo-ken-pô!
+                  "Jo-ken-pô"! | Legenda: Vermelho = perdeu, Verde Claro =
+                  marcou 01 ponto e Verde Escuro = marcou 02 pontos.
                 </Alert>
               </Box>
             </Grid>
