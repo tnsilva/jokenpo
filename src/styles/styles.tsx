@@ -26,14 +26,13 @@ export const Btn = styled(Button)`
 
 export const Btn1 = styled(Button)`
   display: flex;
-  border-radius: 0.5%;
   margin-left: auto;
 
   color: white;
 
   &:hover {
-    background: white;
-    color: blue;
+    font-size: 17px;
+    border-shadow: 2px 2px;
   }
 `;
 
@@ -42,8 +41,6 @@ export const BoxApp = styled((props: any) => (
 ))`
   display: flex;
   flex-direction: row;
-  // border: 0.5px solid black;
-  // border-radius: 5%;
   margin: 15px 0;
   padding: 6px;
   height: 300px;
@@ -68,7 +65,6 @@ export const Box2 = styled(Box)`
 `;
 
 export const Box3 = styled(Box)`
-  // display: flex;
   border: 0.5px solid black;
   border-radius: 5%;
   margin: 15px 0;
@@ -76,7 +72,6 @@ export const Box3 = styled(Box)`
 `;
 
 export const Box4 = styled(Box)`
-  // display: flex;
   border-radius: 5%;
   margin: 15px 0;
   padding: 6px;

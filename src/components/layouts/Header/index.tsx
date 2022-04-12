@@ -1,4 +1,4 @@
-import { AppBar, Box, Container, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Container, Toolbar} from "@mui/material";
 import { Btn1 } from "../../../styles/styles";
 
 export const Header = () => {
@@ -6,29 +6,20 @@ export const Header = () => {
     <Container sx={{ m: 4 }}>
       <AppBar position="fixed">
         <Toolbar variant="regular">
-          <Typography variant="h6" color="inherit" component="div">
-            Jo - Ken - Pô
-          </Typography>
+          <Box>
+            <Btn1 variant="outlined" href="/">
+              Jo - Ken - Pô
+            </Btn1>
+          </Box>
 
           <Box display="flex" marginLeft="auto">
-            <Btn1
-              // sx={{ ml: 12 }}
-              variant="outlined"
-              href="/"
-              // onClick={() => novaJogada}
-            >
-              Novo Jogo
+            <Btn1 variant="outlined" href="/placar">
+              Placar
             </Btn1>
 
-            {/* <Btn1
-              // sx={{ ml: 12 }}
-              variant="outlined"
-              href="/rodadas"
-              // onClick={() => novaJogada}
-            >
-              rodadas
-            </Btn1> */}
-            {/* <Link to="/rodadas">Rodadas</Link> */}
+            <Btn1 variant="outlined" href="/rodadas">
+              Rodadas
+            </Btn1>
           </Box>
         </Toolbar>
       </AppBar>

@@ -1,14 +1,17 @@
 import { BrowserRouter } from "react-router-dom";
-import { Home } from "./pages/Home";
+import { Principal } from "./components";
+import { PlayProvider } from "./contexts";
 import { AppRoutes } from "./routes";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Home>
-        <AppRoutes />
-      </Home>
-    </BrowserRouter>
+    <PlayProvider>
+      <BrowserRouter>
+        <Principal>
+          <AppRoutes />
+        </Principal>
+      </BrowserRouter>
+    </PlayProvider>
   );
 }
 
