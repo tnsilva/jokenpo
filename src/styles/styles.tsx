@@ -83,3 +83,12 @@ export const Box4 = styled(Box)`
   margin: 15px 0;
   padding: 6px;
 `;
+
+export const Box5 = styled(Box)`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+export const Box6 = styled(Paper)`
+  border: 2px solid #ccc;
+`;
