@@ -27,7 +27,7 @@ export const Home = () => {
           <>
             <Grid item xs={12} md={12}>
               <Alert sx={{ p: 1 }}>
-                Para recomeçar, clique em "Jo - Ken - Pô"!
+                Para recomeçar, clique em "Novo Jogo"!
               </Alert>
             </Grid>
 
