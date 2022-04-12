@@ -1,20 +1,22 @@
 import { usePlayContext } from "../hooks";
 
-import { Box, Typography } from "@mui/material";
-import { Box2 } from "../styles/styles";
+import { Box, Paper, Typography } from "@mui/material";
+import { Box4 } from "../styles/styles";
 
 export const Placar = () => {
   const { contPlayer, contPc1, contPc2 } = usePlayContext();
 
   return (
-    <Box sx={{ p: 1 }}>
-      <Typography variant="h6">Placar</Typography>
+    <Box sx={{ p: 2 }}>
+      <Typography variant="h4">Placar</Typography>
 
-      <Box2>
-        <Box>Jogador: {contPlayer}</Box>
-        <Box>PC1: {contPc1}</Box>
-        <Box>PC2: {contPc2}</Box>
-      </Box2>
+      <Box4>
+        <Paper>
+          <Typography variant="h6">Jogador: {contPlayer} pts</Typography>
+          <Typography variant="h6">Computador 1: {contPc1} pts</Typography>
+          <Typography variant="h6">Computador 2: {contPc2} pts</Typography>
+        </Paper>
+      </Box4>
     </Box>
   );
 };

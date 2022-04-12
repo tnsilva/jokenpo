@@ -50,7 +50,7 @@ export const BoxApp = styled((props: any) => (
   flex-direction: row;
   margin: 15px 0;
   padding: 6px;
-  height: 300px;
+  height: 200px;
   align-items: center;
 
   justify-content: space-around;
@@ -64,11 +64,11 @@ export const BoxApp = styled((props: any) => (
 
 export const Box2 = styled(Box)`
   display: flex;
+  flex-direction: column;
   border: 0.5px solid black;
-  border-radius: 5%;
-  margin: 15px 0;
+  margin: 5px 0;
   padding: 6px;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 export const Box3 = styled(Box)`

@@ -8,7 +8,7 @@ export const Rodadas = () => {
 
   return (
     <Box sx={{ p: 2 }}>
-      <Typography variant="h6">Rodadas</Typography>
+      <Typography variant="h4">Pontos por Rodada</Typography>
 
       {rounds.length > 0 ? (
         <>
@@ -17,24 +17,24 @@ export const Rodadas = () => {
               rod.round > 0 && (
                 <Box4 key={rod.id}>
                   <Paper>
-                    <Typography>Nº: {rod.round}</Typography>
-                    <Box>Jogador: {rod.player}</Box>
-                    <Box>PC1: {rod.pc1}</Box>
-                    <Box>PC2: {rod.pc2}</Box>
+                    <Typography variant="h6">{rod.round}</Typography>
+                    <Typography>Jogador: {rod.player} pts</Typography>
+                    <Typography>Computador 1: {rod.pc1} pts</Typography>
+                    <Typography>Computador 2: {rod.pc2} pts</Typography>
                   </Paper>
                 </Box4>
               )
           )}
         </>
       ) : (
-        <Box>
+        <Box4>
           <Paper>
-            <Typography>Nº: 0</Typography>
-            <Box>Jogador: 0</Box>
-            <Box>PC1: 0</Box>
-            <Box>PC2: 0</Box>
+            <Typography variant="h6"> 0</Typography>
+            <Typography>Jogador: 0</Typography>
+            <Typography>Computador 1: 0</Typography>
+            <Typography>Computador 2: 0</Typography>
           </Paper>
-        </Box>
+        </Box4>
       )}
     </Box>
   );

@@ -1,6 +1,5 @@
 import { Footer, Header, MainPage } from "..";
 
-
 interface PrincipalProps {
   children: React.ReactNode;
 }
