@@ -31,8 +31,15 @@ export const Btn1 = styled(Button)`
   color: white;
 
   &:hover {
-    font-size: 17px;
-    border-shadow: 2px 2px;
+    border: 1px solid #fff;
+  }
+
+  @media (max-width: 650px) {
+    font-size: 10px;
+
+    &:hover {
+      border: 1px solid #fff;
+    }
   }
 `;
 
