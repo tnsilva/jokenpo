@@ -53,7 +53,7 @@ export const PlayProvider: React.FC = ({ children }) => {
   useEffect(() => {
     if (n > 0) {
       if (opPlayer === opPc1 && opPc1 === opPc2) {
-        setMsg("Players Drew");
+        setMsg("Jogadores Empataram");
       } else {
         setMsg("");
 
