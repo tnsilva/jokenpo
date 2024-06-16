@@ -5,8 +5,7 @@ import {
   Switch as MuiSwitch,
   Toolbar,
   Typography,
-  Grid,
-  MenuItem,
+  Button,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
@@ -32,21 +31,15 @@ export const Header = () => {
             </Link>
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Grid container justifyContent="center">
-              <Grid item>
-                <MenuItem onClick={() => navigate("/pontuacoes")}>
-                  Pontuações
-                </MenuItem>
-              </Grid>
-              <Grid item>
-                <MenuItem onClick={() => navigate("/historico")}>
-                  Histórico
-                </MenuItem>
-              </Grid>
-              <Grid item>
-                <MenuItem onClick={() => navigate("/regras")}>Regras</MenuItem>
-              </Grid>
-            </Grid>
+            <Button color="inherit" component={Link} to="/scores">
+              Pontuações
+            </Button>
+            <Button color="inherit" component={Link} to="/history">
+              Histórico
+            </Button>
+            <Button color="inherit" component={Link} to="/rules">
+              Regras
+            </Button>
             <MuiSwitch
               checked={darkMode}
               onChange={toggleDarkMode}

@@ -1,7 +1,7 @@
 import { Typography, Box } from "@mui/material";
 import { usePlayContext } from "../hooks";
 
-const HistoricoPartidas = () => {
+const History = () => {
   const { history } = usePlayContext();
 
   return (
@@ -24,4 +24,4 @@ const HistoricoPartidas = () => {
   );
 };
 
-export default HistoricoPartidas;
+export default History;

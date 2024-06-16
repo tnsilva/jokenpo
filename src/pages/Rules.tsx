@@ -1,6 +1,6 @@
 import { Typography, Box } from "@mui/material";
 
-const RegrasDoJogo = () => {
+const Rules = () => {
   return (
     <Box sx={{ textAlign: "center", mt: 5 }}>
       <Typography variant="h4" gutterBottom>
@@ -26,4 +26,4 @@ const RegrasDoJogo = () => {
   );
 };
 
-export default RegrasDoJogo;
+export default Rules;

@@ -1,7 +1,7 @@
 import { Typography, Box } from "@mui/material";
 import { usePlayContext } from "../hooks";
 
-const Pontuacoes = () => {
+const Scores = () => {
   const { userScore, computerScore } = usePlayContext();
 
   return (
@@ -18,4 +18,4 @@ const Pontuacoes = () => {
   );
 };
 
-export default Pontuacoes;
+export default Scores;
