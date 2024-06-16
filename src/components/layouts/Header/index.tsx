@@ -1,53 +1,61 @@
-import { AppBar, Box, Container, Toolbar } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { usePlayContext } from "../../../hooks";
-import { Btn1 } from "../../../styles/styles";
+import {
+  AppBar,
+  Box,
+  Stack,
+  Switch as MuiSwitch,
+  Toolbar,
+  Typography,
+  Grid,
+  MenuItem,
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useTheme } from "../../../contexts/ThemeContext";
 
 export const Header = () => {
+  const { darkMode, toggleDarkMode } = useTheme();
   const navigate = useNavigate();
-  const { opPc1, opPc2 } = usePlayContext();
 
-  const handlePage = (p: string) => {
-    switch (p) {
-      case "placar":
-        navigate("/placar");
-        break;
-      case "rodadas":
-        navigate("/rodadas");
-        break;
-
-      default:
-        navigate("/");
-    }
+  const style = {
+    textDecoration: "none",
+    color: "#fff",
   };
 
   return (
-    <Container sx={{ m: 4 }}>
-      <AppBar position="fixed">
-        <Toolbar variant="regular">
-          <Box>
-            <Btn1 variant="outlined" onClick={() => handlePage("home")}>
-              Jo - Ken - Pô
-            </Btn1>
+    <Stack flexDirection="row">
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            <Link to="/" style={style}>
+              Jokenpo
+            </Link>
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Grid container justifyContent="center">
+              <Grid item>
+                <MenuItem onClick={() => navigate("/pontuacoes")}>
+                  Pontuações
+                </MenuItem>
+              </Grid>
+              <Grid item>
+                <MenuItem onClick={() => navigate("/historico")}>
+                  Histórico
+                </MenuItem>
+              </Grid>
+              <Grid item>
+                <MenuItem onClick={() => navigate("/regras")}>Regras</MenuItem>
+              </Grid>
+            </Grid>
+            <MuiSwitch
+              checked={darkMode}
+              onChange={toggleDarkMode}
+              icon={<Brightness4Icon />}
+              checkedIcon={<Brightness7Icon />}
+            />
           </Box>
-
-          {opPc1 !== null && opPc2 !== null && (
-            <Box display="flex" marginLeft="auto">
-              <Btn1 variant="outlined" onClick={() => handlePage("placar")}>
-                Placar
-              </Btn1>
-
-              <Btn1 variant="outlined" onClick={() => handlePage("rodadas")}>
-                Rodadas
-              </Btn1>
-
-              <Btn1 variant="outlined" href="/">
-                Novo Jogo
-              </Btn1>
-            </Box>
-          )}
         </Toolbar>
       </AppBar>
-    </Container>
+    </Stack>
   );
 };

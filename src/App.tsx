@@ -1,17 +1,20 @@
 import { BrowserRouter } from "react-router-dom";
-import { Principal } from "./components";
 import { PlayProvider } from "./contexts";
 import { AppRoutes } from "./routes";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { Layout } from "./components/layouts/Layout";
 
 function App() {
   return (
-    <PlayProvider>
-      <BrowserRouter>
-        <Principal>
-          <AppRoutes />
-        </Principal>
-      </BrowserRouter>
-    </PlayProvider>
+    <ThemeProvider>
+      <PlayProvider>
+        <BrowserRouter>
+          <Layout>
+            <AppRoutes />
+          </Layout>
+        </BrowserRouter>
+      </PlayProvider>
+    </ThemeProvider>
   );
 }
 

@@ -5,5 +5,5 @@ type MainProps = {
 };
 
 export const MainPage = ({ children }: MainProps) => {
-  return <Box sx={{ m: 0, p: 4 }}>{children}</Box>;
+  return <Box>{children}</Box>;
 };
