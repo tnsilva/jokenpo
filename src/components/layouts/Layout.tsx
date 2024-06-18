@@ -12,13 +12,14 @@ export const Layout = ({ children }: LayoutProps) => {
   console.log("Mode: ", darkMode);
   return (
     <Stack
-      m={0}
-      p={0}
-      sx={{ background: darkMode ? "black" : "white", height: "100vh" }}
+      // m={0}
+      // p={0}
+      sx={{ background: darkMode ? "black" : "white"}}
+      height="auto"
     >
       <Header />
       <MainPage>{children}</MainPage>
-      <Footer />
+      {/* <Footer /> */}
     </Stack>
   );
 };

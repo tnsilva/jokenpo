@@ -28,6 +28,19 @@ const darkTheme = createTheme({
         size: "medium",
       },
     },
+    MuiTable: {
+      defaultProps: {
+        color: "#c1c1c1"
+      }
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'inherit',
+          color: '#c1c1c1'
+        }
+      }
+    }
   },
   typography: {
     allVariants: {

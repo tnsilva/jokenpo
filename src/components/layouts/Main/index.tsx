@@ -5,5 +5,5 @@ type MainProps = {
 };
 
 export const MainPage = ({ children }: MainProps) => {
-  return <Box>{children}</Box>;
+  return <Box minHeight="100vh">{children}</Box>;
 };

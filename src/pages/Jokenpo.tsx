@@ -7,17 +7,20 @@ const Jokenpo = () => {
   const {
     choices,
     userChoice,
-    handleChoice,
+    handleUserChoice,
     showResult,
     result,
-    computerChoice,
+    computerChoice1,
+    computerChoice2,
   } = usePlayContext();
 
   return (
     <Container maxWidth="sm" sx={{ textAlign: "center", mt: 5 }}>
-      <Typography variant="h3" gutterBottom>
-        Jokenpo
-      </Typography>
+      <Box sx={{ mt: 4, mb: 2 }}>
+        <Typography variant="h4" gutterBottom>
+          Jogue Contra Dois Computadores
+        </Typography>
+      </Box>
 
       <Box my={4}>
         <Grid container spacing={2} justifyContent="center">
@@ -26,7 +29,7 @@ const Jokenpo = () => {
               <Button
                 variant="contained"
                 color={userChoice === choice.value ? "secondary" : "primary"}
-                onClick={() => handleChoice(choice.value)}
+                onClick={() => handleUserChoice(choice.value)}
                 startIcon={choice.icon}
                 sx={{ minWidth: 120 }}
                 aria-label={choice.alt}
@@ -44,20 +47,27 @@ const Jokenpo = () => {
         classNames="result"
         unmountOnExit
       >
-        <Box my={4}>
-          <Typography variant="h5" gutterBottom>
-            {result === "Empate"
-              ? "Empate! Jogue novamente."
-              : result === "Você ganhou!"
-              ? "Parabéns! Você ganhou!"
-              : "Que pena! Você perdeu."}
-          </Typography>
-          <Typography variant="body1">
-            Você escolheu: {userChoice}
-            <br />
-            Computador escolheu: {computerChoice}
-          </Typography>
-        </Box>
+        {result && (
+          <Box sx={{ mt: 4, textAlign: "center" }}>
+            <Typography variant="h6" gutterBottom>
+              Resultado:
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Você escolheu: {userChoice}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Computador 1 escolheu: {computerChoice1}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Computador 2 escolheu: {computerChoice2}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+              {result === "win" && "Você ganhou!"}
+              {result === "lose" && "Você perdeu!"}
+              {result === "draw" && "Empate!"}
+            </Typography>
+          </Box>
+        )}
       </CSSTransition>
     </Container>
   );

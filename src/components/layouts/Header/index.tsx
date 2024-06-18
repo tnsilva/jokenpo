@@ -31,6 +31,9 @@ export const Header = () => {
             </Link>
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Button color="inherit" component={Link} to="/">
+              Novo Jogo
+            </Button>
             <Button color="inherit" component={Link} to="/scores">
               Pontuações
             </Button>

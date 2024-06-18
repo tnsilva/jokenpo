@@ -5,7 +5,8 @@ import ScissorsIcon from "@mui/icons-material/ContentCut";
 
 interface IHistory {
   userChoice: string;
-  computerChoice: string;
+  computerChoice1: string;
+  computerChoice2: string;
   result: string;
 }
 
@@ -19,13 +20,15 @@ interface IChoice {
 interface PlayContextData {
   choices: IChoice[];
   userChoice: string;
-  computerChoice: string;
+  computerChoice1: string;
+  computerChoice2: string;
   result: string;
   showResult: boolean;
   userScore: number;
-  computerScore: number;
+  computer1Score: number;
+  computer2Score: number;
   history: IHistory[];
-  handleChoice: (choice: string) => void;
+  handleUserChoice: (choice: string) => void;
 }
 
 export const PlayContext = createContext<PlayContextData>(
@@ -33,21 +36,39 @@ export const PlayContext = createContext<PlayContextData>(
 );
 
 const choices = [
-  { name: "Pedra", icon: <RockIcon />, value: "pedra", alt: "Pedra" },
-  { name: "Papel", icon: <PaperIcon />, value: "papel", alt: "Papel" },
-  { name: "Tesoura", icon: <ScissorsIcon />, value: "tesoura", alt: "Tesoura" },
+  { name: "Pedra", icon: <RockIcon />, value: "Pedra", alt: "Pedra" },
+  { name: "Papel", icon: <PaperIcon />, value: "Papel", alt: "Papel" },
+  { name: "Tesoura", icon: <ScissorsIcon />, value: "Tesoura", alt: "Tesoura" },
 ];
 
-const getResult = (userChoice: string, computerChoice: string) => {
-  if (userChoice === computerChoice) return "Empate";
-  if (
-    (userChoice === "pedra" && computerChoice === "tesoura") ||
-    (userChoice === "papel" && computerChoice === "pedra") ||
-    (userChoice === "tesoura" && computerChoice === "papel")
-  ) {
-    return "Você ganhou!";
+const getRandomChoice = () =>
+  choices[Math.floor(Math.random() * choices.length)];
+
+const determineWinner = (
+  userChoice: string,
+  computerChoice1: string,
+  computerChoice2: string
+) => {
+  const winConditions: any = {
+    Pedra: "Tesoura",
+    Papel: "Pedra",
+    Tesoura: "Papel",
+  };
+
+  const userWinsComputer1 = winConditions[userChoice] === computerChoice1;
+  const userWinsComputer2 = winConditions[userChoice] === computerChoice2;
+  const computer1WinsUser = winConditions[computerChoice1] === userChoice;
+  const computer2WinsUser = winConditions[computerChoice2] === userChoice;
+
+  if (userWinsComputer1 && userWinsComputer2) {
+    return "win";
   }
-  return "Você perdeu!";
+
+  if (computer1WinsUser && computer2WinsUser) {
+    return "lose";
+  }
+
+  return "draw";
 };
 
 const sounds = {
@@ -76,11 +97,13 @@ interface PlayProviderProps {
 
 export const PlayProvider = ({ children }: PlayProviderProps) => {
   const [userChoice, setUserChoice] = useState("");
-  const [computerChoice, setComputerChoice] = useState("");
+  const [computerChoice1, setComputerChoice1] = useState("");
+  const [computerChoice2, setComputerChoice2] = useState("");
   const [result, setResult] = useState("");
   const [showResult, setShowResult] = useState(false);
   const [userScore, setUserScore] = useState(0);
-  const [computerScore, setComputerScore] = useState(0);
+  const [computer1Score, setComputer1Score] = useState(0);
+  const [computer2Score, setComputer2Score] = useState(0);
   const [history, setHistory] = useState<IHistory[]>([]);
 
   useEffect(() => {
@@ -90,15 +113,15 @@ export const PlayProvider = ({ children }: PlayProviderProps) => {
       switch (event.key) {
         case "P":
         case "p":
-          handleChoice("pedra");
+          handleUserChoice("Pedra");
           break;
         case "A":
         case "a":
-          handleChoice("papel");
+          handleUserChoice("Papel");
           break;
         case "T":
         case "t":
-          handleChoice("tesoura");
+          handleUserChoice("Tesoura");
           break;
         default:
           break;
@@ -112,31 +135,54 @@ export const PlayProvider = ({ children }: PlayProviderProps) => {
     };
   }, []);
 
-  const handleChoice = (choice: string) => {
+  useEffect(() => {
+    if (result) {
+      if (result === "win") {
+        setUserScore((prev) => prev + 1);
+        playSound(sounds.win);
+      } else if (result === "lose") {
+        setComputer1Score((prev) => prev + 1);
+        setComputer2Score((prev) => prev + 1);
+        playSound(sounds.lose);
+      }
+
+      setHistory([
+        ...history,
+        {
+          userChoice,
+          computerChoice1,
+          computerChoice2,
+          result,
+        },
+      ]);
+    }
+  }, [result]);
+
+  const handleUserChoice = (choice: string) => {
     playSound(sounds.click);
-    const randomChoice =
-      choices[Math.floor(Math.random() * choices.length)].value;
+    const computer1 = getRandomChoice().value;
+    const computer2 = getRandomChoice().value;
+    const gameResult = determineWinner(choice, computer1, computer2);
+
     setUserChoice(choice);
-    setComputerChoice(randomChoice);
-    const result = getResult(choice, randomChoice);
-    setResult(result);
-    setShowResult(false); // Oculta o resultado anterior
+    setComputerChoice1(computer1);
+    setComputerChoice2(computer2);
+    setResult(gameResult);
+    setShowResult(false);
+
     setTimeout(() => {
-      setShowResult(true); // Mostra o novo resultado após um pequeno atraso
+      setShowResult(true);
     }, 100);
 
-    setHistory([
-      ...history,
-      { userChoice: choice, computerChoice: randomChoice, result },
-    ]);
-
-    if (result === "Você ganhou!") {
-      setUserScore(userScore + 1);
-      playSound(sounds.win);
-    } else if (result === "Você perdeu!") {
-      setComputerScore(computerScore + 1);
-      playSound(sounds.lose);
-    }
+    // setHistory([
+    //   ...history,
+    //   {
+    //     userChoice: choice,
+    //     computerChoice1: computer1,
+    //     computerChoice2: computer2,
+    //     result,
+    //   },
+    // ]);
   };
 
   return (
@@ -144,13 +190,15 @@ export const PlayProvider = ({ children }: PlayProviderProps) => {
       value={{
         choices,
         userChoice,
-        computerChoice,
+        computerChoice1,
+        computerChoice2,
         result,
         showResult,
         userScore,
-        computerScore,
+        computer1Score,
+        computer2Score,
         history,
-        handleChoice,
+        handleUserChoice,
       }}
     >
       {children}
